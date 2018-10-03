@@ -1,0 +1,39 @@
+﻿<#@ template language="C#" #>
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+using System.Runtime.InteropServices;
+
+namespace WaveFormsSDK
+{
+	public static partial class Dwf {
+	<#
+		var enum_names = new [] {
+				"TRIGSRC", "STATE", "ACQMODE", "FILTER", "TRIGTYPE",
+				"TRIGCOND", "TRIGLEN", "FUNC", "ANALOGOUTNODE", "ANALOGIO",
+				"DIGITALINCLOCKSOURCE", "DIGITALINSAMPLEMODE", "DIGITALOUTOUTPUT", "DIGITALOUTTYPE", "DIGITALOUTIDLE" };
+		var textinfo = System.Globalization.CultureInfo.InvariantCulture.TextInfo;
+		foreach (var enum_name in enum_names) {
+			var name = enum_name[0] + enum_name.Substring(1).ToLower(); // textinfo.ToTitleCase(enum_name);
+	#>
+	// ========================================================================================
+        static List<<#=enum_name #>> <#=name#>sOfBitfield(int bf)
+        {
+            var r = new List<<#=enum_name #>>();
+            var trigger_values = (<#=enum_name #>[])Enum.GetValues(typeof(<#=enum_name #>));
+            foreach (var tv in trigger_values)
+            {
+                if ((bf & (1 << (int)tv)) != 0)
+                {
+                    r.Add(tv);
+                }
+            }
+            return r;
+        }
+
+	<#
+		}
+	#>
+	}
+}
