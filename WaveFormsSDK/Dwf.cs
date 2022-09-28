@@ -1140,7 +1140,7 @@ namespace WaveFormsSDK
         }
 
         // ========================================================================================
-        [DllImport("dwf.dll", EntryPoint = "FDwfEnumUserName")]
+        [DllImport("dwf.dll", EntryPoint = "FDwfEnumDeviceName")]
         static unsafe extern bool FDwfEnumDeviceName(int idxDevice, sbyte* szDeviceName /* [32] */);
 
         /// <summary>
